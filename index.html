@@ -3,92 +3,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Page</title>
+<title>About Me</title>
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: black;
-        color: white;
-        text-align: center;
-    }
-    /* Banner */
-    .banner {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-        display: block;
-    }
-    /* Profile Picture */
-    .profile-pic {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        border: 4px solid white;
-        object-fit: cover;
-        margin-top: -60px; /* pulls it over the banner */
-        background-color: black;
-    }
-    h1 {
-        font-size: 1.8em;
-        margin: 10px 0 5px;
-    }
-    p {
-        font-size: 1em;
-        max-width: 500px;
-        margin: auto;
-        font-style: italic;
-        padding: 0 10px;
-    }
-    /* Links with icons */
-    .links {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-    }
-    .links a {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-    }
-    .links img {
-        width: 100%;
-        height: auto;
-        filter: brightness(0) invert(1) drop-shadow(0 0 5px white);
-        transition: transform 0.2s ease;
-    }
-    .links img:hover {
-        transform: scale(1.1);
-    }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    color: white;
+    background: black;
+  }
+
+  /* Background with slight blur */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    filter: blur(3px);
+    z-index: -1;
+  }
+
+  /* Click-to-enter overlay */
+  #enterScreen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 1s ease;
+  }
+
+  #enterScreen h3 {
+    color: white;
+    font-size: 3em;
+    text-align: center;
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff;
+    animation: neon 1.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes neon {
+    0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff; }
+    100% { text-shadow: 0 0 20px #fff, 0 0 40px #fff; }
+  }
+
+  /* Banner */
+  .banner {
+    width: 100%;
+    max-height: 160px;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Main container */
+  #mainContent {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: -40px;
+    padding: 20px;
+  }
+
+  /* Profile picture */
+  .profile-pic {
+    width: 30vw;
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%;
+    border: 4px solid white;
+    object-fit: cover;
+    display: block;
+    margin: 20px auto 10px;
+  }
+
+  /* Speech bubble */
+  .speech-bubble {
+    position: relative;
+    display: inline-block;
+    background: rgba(0,0,0,0.7);
+    padding: 10px 15px;
+    border-radius: 20px;
+    color: white;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 15px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent rgba(0,0,0,0.7) transparent;
+  }
+
+  /* Box for icons and carousel */
+  .box {
+    display: inline-block;
+    background: rgba(0,0,0,0.7);
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    max-width: 90%;
+  }
+
+  .links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+
+  .links a img {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 5px #fff)
+            drop-shadow(0 0 10px #fff)
+            drop-shadow(0 0 20px #fff)
+            drop-shadow(0 0 40px #fff);
+    transition: 0.3s;
+  }
+
+  /* Quote carousel */
+  .quote {
+    font-style: italic;
+    font-weight: bold;
+    max-width: 400px;
+    margin: auto;
+    transition: opacity 1s ease-in-out;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    #enterScreen h3 { font-size: 2em; }
+    .profile-pic { width: 40vw; max-width: 120px; }
+    .speech-bubble { font-size: 0.9em; padding: 8px 12px; }
+    .quote { font-size: 0.9em; max-width: 90%; }
+  }
+
+  @media (max-width: 480px) {
+    #enterScreen h3 { font-size: 1.5em; }
+    .profile-pic { width: 50vw; max-width: 100px; }
+    .speech-bubble { font-size: 0.8em; padding: 6px 10px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- Banner (Change the image link to your own) -->
-<img class="banner" src="https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1470&q=80" alt="Banner">
-
-<!-- Profile Picture (Change the image link to your own) -->
-<img class="profile-pic" src="https://avatars.githubusercontent.com/u/000?v=4" alt="Profile Picture">
-
-<!-- Name -->
-<h1>Legacy</h1>
-
-<!-- Bio -->
-<p>"What is a Legacy? It’s planting seeds in a garden you never get to see."<br>— Alexander Hamilton</p>
-
-<!-- Social Links -->
-<div class="links">
-    <a href="https://www.roblox.com/users/123456789/profile" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Roblox_Logo_2022.svg" alt="Roblox">
-    </a>
-    <a href="https://www.tiktok.com/@yourusername" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.svg" alt="TikTok">
-    </a>
-    <a href="https://open.spotify.com/user/yourusername" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify">
-    </a>
+<!-- Click to enter overlay -->
+<div id="enterScreen">
+  <h3>Click here to enter...</h3>
 </div>
+
+<!-- Banner -->
+<img class="banner" src="22789f623ea02b1a237a695be7bc0c81.jpg" alt="Banner">
+
+<!-- Main Content -->
+<div id="mainContent">
+  <img class="profile-pic" src="84cef277baee327f503bbb277bab8386-1.png" alt="Profile Picture">
+  <div class="speech-bubble">I'm a female</div>
+
+  <div class="box">
+    <div class="links">
+      <a href="https://www.roblox.com/users/560006886/profile" target="_blank">
+        <img src="https://cdn.simpleicons.org/roblox/ffffff" alt="Roblox">
+      </a>
+      <a href="https://www.tiktok.com/@goooddinosaur" target="_blank">
+        <img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok">
+      </a>
+      <a href="https://open.spotify.com/user/31cbhv3gg66spjjweortqjluhzfm" target="_blank">
+        <img src="https://cdn.simpleicons.org/spotify/ffffff" alt="Spotify">
+      </a>
+    </div>
+
+    <div id="quoteCarousel" class="quote"></div>
+  </div>
+</div>
+
+<!-- Audio -->
+<audio id="bgAudio" src="background.mp3" loop></audio>
+
+<script>
+  // Click to enter with fade and play audio
+  const enterScreen = document.getElementById('enterScreen');
+  const bgAudio = document.getElementById('bgAudio');
+
+  enterScreen.addEventListener('click', () => {
+    enterScreen.style.opacity = 0;
+    setTimeout(() => {
+      enterScreen.style.display = 'none';
+      bgAudio.play().catch(e => { console.log("Autoplay blocked."); });
+    }, 1000);
+  });
+
+  // Quote carousel
+  const quotes = [
+    "“Talk less. Smile more.” – Aaron Burr",
+    "“History has its eyes on you.” – George Washington",
+    "“Legacy. What is a legacy? It’s planting seeds in a garden you never get to see.” – Alexander Hamilton",
+    "“Death doesn’t discriminate between the sinners and the saints, it takes and it takes and it takes.” – Aaron Burr",
+    "“Rise up. When you’re living on your knees, you rise up.” – Ensemble"
+  ];
+
+  const quoteElement = document.getElementById('quoteCarousel');
+  let currentQuote = 0;
+  quoteElement.textContent = quotes[currentQuote];
+  setInterval(() => {
+    quoteElement.style.opacity = 0;
+    setTimeout(() => {
+      currentQuote = (currentQuote + 1) % quotes.length;
+      quoteElement.textContent = quotes[currentQuote];
+      quoteElement.style.opacity = 1;
+    }, 1000);
+  }, 7500);
+</script>
 
 </body>
 </html>
